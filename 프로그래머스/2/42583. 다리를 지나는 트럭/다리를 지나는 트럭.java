@@ -19,13 +19,13 @@ class Solution {
             //다리 위에 뭐가 있다
             while (!queue.isEmpty()) {
                 
-                //다리 위의 개수가 다리 길이를 넘어가지 않게
+                //1초 경과
+                sec++;
+                
+                //기존 트럭이 다리 끝에 도착했으면 내려줌
                 if (queue.size() == bridge_length) {
                     onBridge -= queue.poll();
                 }
-                    
-                //1초 경과
-                sec++;
 
                 //다리 위 무게 초과다
                 if (onBridge + t > weight) {
@@ -48,9 +48,9 @@ class Solution {
             
             //다리 위에 트럭이 없다
             if (queue.isEmpty()) {
+                sec++;
                 queue.add(t);
                 onBridge += t;
-                sec++;
             }
             
         }
