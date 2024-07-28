@@ -1,7 +1,7 @@
 class Solution {
     public long solution(int n) {
-        if (n == 1) return 1;
-        if (n == 2) return 2;
+        if (n <= 2) return n;
+
         int aN = 0;
         int a1 = 1;
         int a2 = 2;
