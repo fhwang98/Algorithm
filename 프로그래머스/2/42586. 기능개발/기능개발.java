@@ -4,6 +4,7 @@ import java.util.stream.Stream;
 
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
+        if(progresses.length == 1) return new int[] {1};
         List<Integer> answer = new ArrayList<>();
         int idx = 0;
         int count = 0;
