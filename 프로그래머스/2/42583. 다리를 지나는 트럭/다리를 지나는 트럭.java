@@ -1,62 +1,34 @@
-import java.util.Queue;
-import java.util.LinkedList;
+import java.util.List;
+import java.util.ArrayList;
 
 class Solution {
     public int solution(int bridge_length, int weight, int[] truck_weights) {
-        
-        //경과 시간
-        int sec = 0;
-        
-        //다리 위의 트럭
-        Queue<Integer> queue = new LinkedList<Integer>();
-        
-        //다리 위의 무게
+        int answer = 0;
+        List<Integer> list = new ArrayList<>();
         int onBridge = 0;
-        
-        //모든 트럭이 다리를 건널 때까지 반복
         for (int t : truck_weights) {
-            
-            //다리 위에 뭐가 있다
-            while (!queue.isEmpty()) {
-                
-                //1초 경과
-                sec++;
-                
-                //기존 트럭이 다리 끝에 도착했으면 내려줌
-                if (queue.size() == bridge_length) {
-                    onBridge -= queue.poll();
-                }
-
-                //다리 위 무게 초과다
-                if (onBridge + t > weight) {
-
-                    //아무것도 안올라감
-                    queue.add(0);        
-
-                } else { //트럭이 다리에 올라갔다
-
-                    queue.add(t);
+            // 다리 위에 뭐가 있다.
+            while (!list.isEmpty()) {
+                // 시간 경과
+                answer++;
+                // 다리 끝에 도착했으면 내려준다.
+                if (list.size() == bridge_length) onBridge -= list.remove(0);
+                // 태울 수 없다.
+                if (onBridge + t > weight) list.add(0);
+                // 태울 수 있다.
+                else {
+                    list.add(t);
                     onBridge += t;
-
-                    //t가 다리에 올라갔으니까 다음으로 넘어감
                     break;
-
                 }
-
-                
             }
-            
-            //다리 위에 트럭이 없다
-            if (queue.isEmpty()) {
-                sec++;
-                queue.add(t);
-                onBridge += t;
+            // 다리 위에 아무것도 없다.
+            if (list.isEmpty()) {
+                answer++;
+                list.add(t);
+                onBridge += t; 
             }
-            
         }
-        
-        
-        //총 경과 시간 + 마지막으로 올라간 트럭이 건너는 시간 = 다리의 길이
-        return sec + bridge_length;
+        return answer + bridge_length;
     }
 }
