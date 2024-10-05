@@ -1,23 +1,22 @@
-import java.util.stream.Stream;
 import java.util.Arrays;
 
 class Solution {
     public String solution(int[] numbers) {
-        
-        if (Arrays.stream(numbers).allMatch(n -> n == 0)) return "0";
-        
-        StringBuilder answer = new StringBuilder("");
-
-        //두 수를 합쳤을 때 결과가 더 큰 순으로 정렬
-        String[] strings = Arrays.stream(numbers)
-                                  .mapToObj(String::valueOf)
-                                  .sorted((a, b) -> (b + a).compareTo(a + b))
-                                  .toArray(String[]::new);
-
-        for (String str : strings) {
-            answer.append(str);
+        String[] strs = new String[numbers.length];
+        boolean allZero = true;
+        for (int i = 0; i < numbers.length; i++) {
+            if (numbers[i] != 0) allZero = false;
+            strs[i] = Integer.toString(numbers[i]);
         }
-
-        return answer.toString();
+        if (allZero) return "0";
+        // 두 수를 합쳤을 때 결과가 더 큰 순으로 정렬
+        Arrays.sort(strs, (s1, s2) -> {
+            return (s2 + s1).compareTo(s1 + s2);
+        });
+        String answer = "";
+        for (String s : strs) {
+            answer += s;
+        }
+        return answer;
     }
 }
