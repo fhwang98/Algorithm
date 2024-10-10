@@ -1,20 +1,18 @@
 class Solution {
     public int[] solution(int brown, int yellow) {
-        int[] answer = {0, 0};
-        //yellow = w * h
-        //brown = (w + h) * 2 + 4
-        //일차식 풀이
-            
-        for (int h = 1; h <= yellow; h++) {
-            if (yellow % h != 0) continue;
-            int w = yellow / h;
-            if ((w + h + 2) * 2 == brown) {
-                answer[0] = w + 2;
-                answer[1] = h + 2;
+        int[] answer = new int[2];
+        // (w + h - 2) * 2 = brown
+        // w * h = yellow + brown
+        int multi = yellow + brown;
+        for (int h = 3; h <= multi; h++) {
+            if (multi % h != 0) continue;
+            int w = multi / h;
+            if ((w + h - 2) * 2 == brown) {
+                answer[0] = w;
+                answer[1] = h;
                 break;
             }
         }
-
         return answer;
     }
 }
