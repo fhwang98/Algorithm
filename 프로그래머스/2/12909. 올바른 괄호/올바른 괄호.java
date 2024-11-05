@@ -1,19 +1,15 @@
-import java.util.Stack;
-
 class Solution {
     boolean solution(String s) {
-        if (s.startsWith(")") || s.length() % 2 == 1) return false;
-        Stack<Character> stack = new Stack<>();
+        // 길이가 홀수거나 )로 시작하면 바로 false
+        if (s.length() % 2 == 1 || s.startsWith(")")) return false;
+        int count = 0;
         for (int i = 0; i < s.length(); i++) {
             char cur = s.charAt(i);
-            if (cur == ')') {
-                if (stack.isEmpty()) return false;    
-                else stack.pop();
-            } else {
-                stack.push(cur);
-            }
+            if (cur == '(') count++;
+            else if (cur == ')' && count < 1) return false;
+            else if (cur == ')') count--;
         }
-        if (!stack.isEmpty()) return false;
+        if (count != 0) return false;
         return true;
     }
 }
