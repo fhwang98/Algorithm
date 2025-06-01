@@ -5,40 +5,52 @@ class Solution {
     public int solution(String str1, String str2) {
         str1 = str1.toLowerCase();
         str2 = str2.toLowerCase();
-
+        int answer = 65536;
+        // 같은 문자열이거나 둘다 비어있으면 x
+        if ((str1.equals("") && str2.equals(""))
+           || str1.equals(str2)) return answer;
+        
         Map<String, Integer> map1 = new HashMap<>();
         Map<String, Integer> map2 = new HashMap<>();
-
-        // 두 글자씩 끊어서 다중집합 생성
+        
+        String s;
+        
         for (int i = 0; i < str1.length() - 1; i++) {
-            String temp = str1.substring(i, i + 2);
-            if (Pattern.matches("^[a-z]{2}$", temp)) {
-                map1.put(temp, map1.getOrDefault(temp, 0) + 1);
+            s = str1.substring(i, i + 2);
+            if (Pattern.matches("^[a-z]*$", s)) {
+                map1.put(s, map1.getOrDefault(s, 0) + 1);
             }
         }
         
         for (int i = 0; i < str2.length() - 1; i++) {
-            String temp = str2.substring(i, i + 2);
-            if (Pattern.matches("^[a-z]{2}$", temp)) {
-                map2.put(temp, map2.getOrDefault(temp, 0) + 1);
+            s = str2.substring(i, i + 2);
+            if (Pattern.matches("^[a-z]*$", s)) {
+                map2.put(s, map2.getOrDefault(s, 0) + 1);
             }
         }
-
-        double union = 0;
-        double inter = 0;
-        // 합집합 및 교집합 크기 계산
-        Set<String> allKeys = new HashSet<>(map1.keySet());
-        allKeys.addAll(map2.keySet());
-
-        for (String key : allKeys) {
-            int count1 = map1.getOrDefault(key, 0);
-            int count2 = map2.getOrDefault(key, 0);
-
-            union += Math.max(count1, count2);  // 합집합 크기
-            inter += Math.min(count1, count2);  // 교집합 크기
-        }
-
-        return (union == 0) ? 65536 : (int) (inter / union * 65536);
         
+        int inter = 0;
+        int union = 0;
+        for (String key : map1.keySet()) {
+            System.out.println(key);
+            if (map2.containsKey(key)) {
+                inter += Math.min(map1.get(key), map2.get(key));
+                union += Math.max(map1.get(key), map2.get(key));
+            } else {
+                union += map1.get(key);
+            }
+        }
+        System.out.println("---------------");
+        for (String key : map2.keySet()) {
+            if (!map1.containsKey(key)) { 
+                union += map2.get(key);    
+            }
+            System.out.println(key);
+        }
+        System.out.println("inter: " + inter);
+        System.out.println("union: " + union);
+        answer = answer * inter / union;
+        
+        return answer;
     }
 }
