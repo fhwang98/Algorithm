@@ -1,15 +1,26 @@
 class Solution {
     boolean solution(String s) {
-        // 길이가 홀수거나 )로 시작하면 바로 false
-        if (s.length() % 2 == 1 || s.startsWith(")")) return false;
-        int count = 0;
+        
+        if (s.length() % 2 == 1
+           || s.startsWith(")")) return false;
+        
+        boolean answer = true;
+
+        int cnt = 0;
+        
         for (int i = 0; i < s.length(); i++) {
-            char cur = s.charAt(i);
-            if (cur == '(') count++;
-            else if (cur == ')' && count < 1) return false;
-            else if (cur == ')') count--;
+            char c = s.charAt(i);
+            if (c == '(') {
+                cnt++;
+            } else if (c == ')' && cnt > 0) {
+                // 열린게 있고 닫는다
+                cnt--;
+            } else if (c == ')' && cnt < 1) {
+                // 열린게 없는데 닫는다
+                return !answer;
+            }
         }
-        if (count != 0) return false;
-        return true;
+
+        return cnt == 0 ? answer : !answer;
     }
 }
