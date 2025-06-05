@@ -1,17 +1,18 @@
 class Solution {
     public int solution(int n) {
+        
+        String bin = Integer.toBinaryString(n);
+        bin = bin.replace("0", "");
+        int cnt = bin.length();
+        
         int answer = n + 1;
         while (true) {
-            if (count(n) == count(answer)) return answer;
+            bin = Integer.toBinaryString(answer);
+            bin = bin.replace("0", "");
+            if (cnt == bin.length()) break;
             answer++;
+            
         }
-    }
-    public int count(int n) {
-        int cnt = 0;
-        while (n > 0) {
-            if (n % 2 == 1)cnt++;
-            n /= 2;
-        }
-        return cnt;
+        return answer;
     }
 }
