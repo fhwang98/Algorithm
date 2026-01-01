@@ -1,12 +1,17 @@
-import java.util.Arrays;
+import java.util.*;
 
 class Solution {
     public boolean solution(String[] phone_book) {
-        if (phone_book.length == 1) return true;
+        boolean answer = true;
+        
         Arrays.sort(phone_book);
-        for (int i = 1; i < phone_book.length; i++) {
-            if (phone_book[i].startsWith(phone_book[i - 1])) return false;
+        for (int i = 0; i < phone_book.length - 1; i++) {
+            if (phone_book[i+1].startsWith(phone_book[i])) {
+                answer = false;
+                break;
+            }
         }
-        return true;
+        
+        return answer;
     }
 }
