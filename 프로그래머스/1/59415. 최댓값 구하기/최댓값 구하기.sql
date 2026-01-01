@@ -1,3 +1,1 @@
--- 코드를 입력하세요
-SELECT max(datetime) AS 시간
-FROM animal_ins
+SELECT MAX(DATETIME) FROM ANIMAL_INS
