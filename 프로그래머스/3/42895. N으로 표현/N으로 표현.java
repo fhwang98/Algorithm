@@ -1,32 +1,47 @@
+import java.util.*;
+
 class Solution {
-    int answer = Integer.MAX_VALUE;
-    int N;
-    int number;
 
     public int solution(int N, int number) {
-        this.N = N;
-        this.number = number;
-        dfs(0, 0);
-        return (answer == Integer.MAX_VALUE) ? -1 : answer;
+        if (N == number) return 1;
+
+        List<Set<Integer>> dp = new ArrayList<>();
+        for (int i = 0; i <= 8; i++) dp.add(new HashSet<>());
+
+        for (int k = 1; k <= 8; k++) {
+            // 1) 이어붙인 수
+            dp.get(k).add(concatN(N, k));
+
+            // 2) 분할 조합
+            for (int i = 1; i < k; i++) {
+                Set<Integer> left = dp.get(i);
+                Set<Integer> right = dp.get(k - i);
+                combine(dp.get(k), left, right);
+            }
+
+            // 3) 목표 확인
+            if (dp.get(k).contains(number)) return k;
+        }
+
+        return -1;
     }
 
-    public void dfs(int count, int current) {
-        if (count > 8) { // 8보다 크면 -1 반환 (최대 사용 가능한 N의 개수가 8개)
-            return;
+    private int concatN(int N, int k) {
+        int val = 0;
+        for (int i = 0; i < k; i++) {
+            val = val * 10 + N;
         }
-        if (current == number) { // 현재 값이 찾고자 하는 값과 같다면
-            answer = Math.min(answer, count); // 최소값 업데이트
-            return;
-        }
+        return val;
+    }
 
-        int tempN = N;
-        for (int i = 1; i <= 8 - count; i++) { 
-            dfs(count + i, current + tempN);
-            dfs(count + i, current - tempN);
-            dfs(count + i, current * tempN);
-            dfs(count + i, current / tempN);
-
-            tempN = tempN * 10 + N; // N을 5 -> 55, 555, ... 과 같이 만들어줌
+    private void combine(Set<Integer> target, Set<Integer> left, Set<Integer> right) {
+        for (int a : left) {
+            for (int b : right) {
+                target.add(a + b);
+                target.add(a - b);
+                target.add(a * b);
+                if (b != 0) target.add(a / b);
+            }
         }
     }
 }
