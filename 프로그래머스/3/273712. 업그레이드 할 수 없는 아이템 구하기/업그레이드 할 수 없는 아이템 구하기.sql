@@ -1,6 +1,5 @@
-SELECT i.ITEM_ID, i.ITEM_NAME, i.RARITY
-FROM ITEM_INFO i
+SELECT i.item_id, i.item_name, i.rarity FROM ITEM_INFO i
 LEFT OUTER JOIN ITEM_TREE t
-ON i.ITEM_ID = t.PARENT_ITEM_ID
-WHERE t.ITEM_ID IS NULL
-ORDER BY i.ITEM_ID DESC
+ON i.item_id = t.parent_item_id
+WHERE t.parent_item_id IS NULL
+ORDER BY i.item_id DESC
