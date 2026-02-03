@@ -9,12 +9,12 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int A = Integer.parseInt(st.nextToken());
-        int B = Integer.parseInt(st.nextToken());
-        int result = (A + B) * (A - B);
+        Long A = Long.parseLong(st.nextToken());
+        Long B = Long.parseLong(st.nextToken());
+        Long result = (A + B) * (A - B);
         bw.write(String.valueOf(result));
         bw.newLine();
-        
+
         bw.flush();
         bw.close();
         br.close();
